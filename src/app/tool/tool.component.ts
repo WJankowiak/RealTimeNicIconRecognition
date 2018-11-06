@@ -68,7 +68,7 @@ export class ToolComponent implements OnInit {
     },
     {
       label: 'roadblock',
-      img: 'assets/img/roadblock.png',
+      img: 'assets/img/road_block.png',
     }
   ];
   private sign = {
