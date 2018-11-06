@@ -10,7 +10,7 @@ export class PaintService {
 
   private canvas: HTMLCanvasElement = null;
   private ctx: CanvasRenderingContext2D;
-  private canvasSize = 320;
+  private canvasSize = 200;
 
   initialize(mountPoint: HTMLElement) {
     this.canvas = mountPoint.querySelector('canvas');
@@ -24,7 +24,7 @@ export class PaintService {
 
   paint({ clientX, clientY }) {
     this.ctx.beginPath();
-    if (Math.abs(infiniteX - clientX) < 320 && Math.abs(infiniteY - clientY) < 320) {
+    if (Math.abs(infiniteX - clientX) < this.canvasSize && Math.abs(infiniteY - clientY) < this.canvasSize) {
       this.ctx.moveTo(infiniteX, infiniteY);
     }
     this.ctx.lineTo(clientX, clientY);

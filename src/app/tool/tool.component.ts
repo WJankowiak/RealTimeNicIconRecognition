@@ -10,6 +10,8 @@ import {mergeMap, takeUntil} from 'rxjs/operators';
 })
 export class ToolComponent implements OnInit {
 
+  private canvasSize = 200;
+
   constructor(private paintService: PaintService, private elRef: ElementRef) { }
 
   ngOnInit() {
@@ -49,6 +51,25 @@ export class ToolComponent implements OnInit {
       top: rect.top + document.body.scrollTop,
       left: rect.left + document.body.scrollLeft
     };
+  }
+
+  saveCanvas(): void {
+    const { nativeElement } = this.elRef;
+    const canvas = nativeElement.querySelector('canvas') as HTMLCanvasElement;
+    const pixelArray = Array(this.canvasSize).fill(Array(this.canvasSize));
+    for (let x = 0; x < this.canvasSize; x++) {
+      for (let y = 0; y < this.canvasSize; y++) {
+        const pixel = canvas.getContext('2d').getImageData(x, y, 1, 1).data;
+        this.isBlack(pixel) ? pixelArray[x][y] = 1 : pixelArray[x][y] = 0;
+        if (this.isBlack(pixel)) {
+          console.log(x, y, pixelArray[x][y]);
+        }
+      }
+    }
+  }
+
+  isBlack(pixel): boolean {
+    return pixel[3] > 0 && pixel[0] === pixel[1] && pixel[1] === pixel[2] && pixel[2] === 0;
   }
 
 }
