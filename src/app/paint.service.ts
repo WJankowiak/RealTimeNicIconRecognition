@@ -34,6 +34,10 @@ export class PaintService {
     infiniteY = clientY;
   }
 
+  clear(): void {
+    this.ctx.clearRect(0, 0, this.canvasSize, this.canvasSize);
+  }
+
   refresh(): void {
     infiniteX = infiniteY = Infinity;
   }

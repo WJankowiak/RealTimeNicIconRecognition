@@ -152,6 +152,7 @@ export class ToolComponent implements OnInit {
   saveSign(): void {
     this.toogleSnapsGathering(false);
     console.log(this.sign);
+    this.refresh();
   }
 
   refresh(): void {
@@ -161,6 +162,7 @@ export class ToolComponent implements OnInit {
       snaps: []
     };
     this.initSign();
+    this.paintService.clear();
   }
 
   isBlack(pixel): boolean {
