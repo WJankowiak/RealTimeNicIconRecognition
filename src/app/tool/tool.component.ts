@@ -10,7 +10,13 @@ import {mergeMap, takeUntil} from 'rxjs/operators';
 })
 export class ToolComponent implements OnInit {
 
-  private canvasSize = 200;
+  private canvasSize = 64;
+  private interval;
+  private isIntervalRunning = false;
+  private sign = {
+    label: 'xd',
+    snaps: []
+  };
 
   constructor(private paintService: PaintService, private elRef: ElementRef) { }
 
@@ -28,10 +34,11 @@ export class ToolComponent implements OnInit {
     const paints$ = down$.pipe(
       mergeMap(down => move$.pipe(takeUntil(up$)))
     );
-
-    down$.subscribe(console.info);
-
     const offset = this.getOffset(canvas);
+
+    down$.subscribe(() => {
+      this.toogleSnapsGathering(true);
+    });
 
     paints$.subscribe((event) => {
       const clientX = event.clientX - offset.left;
@@ -53,23 +60,43 @@ export class ToolComponent implements OnInit {
     };
   }
 
-  saveCanvas(): void {
+  makeSnap(): void {
     const { nativeElement } = this.elRef;
     const canvas = nativeElement.querySelector('canvas') as HTMLCanvasElement;
-    const pixelArray = Array(this.canvasSize).fill(Array(this.canvasSize));
+    const pixelArray = [];
     for (let x = 0; x < this.canvasSize; x++) {
+      pixelArray.push([]);
       for (let y = 0; y < this.canvasSize; y++) {
-        const pixel = canvas.getContext('2d').getImageData(x, y, 1, 1).data;
-        this.isBlack(pixel) ? pixelArray[x][y] = 1 : pixelArray[x][y] = 0;
-        if (this.isBlack(pixel)) {
-          console.log(x, y, pixelArray[x][y]);
+        if (this.isBlack(canvas.getContext('2d').getImageData(x, y, 1, 1).data)) {
+          pixelArray[x].push(1);
+        } else {
+          pixelArray[x].push(0);
         }
       }
     }
+    this.sign.snaps.push(pixelArray);
+  }
+
+  saveSign(): void {
+    this.toogleSnapsGathering(false);
+    console.log(this.sign);
   }
 
   isBlack(pixel): boolean {
     return pixel[3] > 0 && pixel[0] === pixel[1] && pixel[1] === pixel[2] && pixel[2] === 0;
+  }
+
+  toogleSnapsGathering(turnOn: boolean): void {
+    if (turnOn && !this.isIntervalRunning) {
+      this.interval = setInterval(() => {
+        this.makeSnap();
+      }, 500);
+      this.isIntervalRunning = true;
+    }
+    if (!turnOn) {
+      clearInterval(this.interval);
+      this.isIntervalRunning = false;
+    }
   }
 
 }
