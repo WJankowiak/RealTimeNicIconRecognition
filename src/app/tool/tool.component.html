@@ -1,9 +1,17 @@
 <div class="container text-center mt-5">
   <h3 class="mb-4">Data gathering tool</h3>
-  <canvas #mount class="border border-2 border-dark bg-white mb-4"></canvas>
-  <div class="row">
+  <div class="row mb-4">
+    <div class="col-6 text-right">
+      <canvas #mount class="border border-2 border-dark bg-white mb-4"></canvas>
+    </div>
+    <div class="col-6 text-left">
+      <img class="img img-fluid" [src]="activeSign.img">
+    </div>
+  </div>
+  <div class="row mb-4">
     <div class="col-12 text-center">
-      <button class="btn btn-dark" (click)="saveSign()">SAVE</button>
+      <button class="btn btn-outline-dark mx-2" (click)="refresh()">RELOAD</button>
+      <button class="btn btn-dark mx-2" (click)="saveSign()">SAVE</button>
     </div>
   </div>
 </div>

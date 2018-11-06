@@ -10,18 +10,79 @@ import {mergeMap, takeUntil} from 'rxjs/operators';
 })
 export class ToolComponent implements OnInit {
 
-  private canvasSize = 64;
+  private canvasSize = 128;
   private interval;
   private isIntervalRunning = false;
+  private signMap = [
+    {
+      label: 'accident',
+      img: 'assets/img/accident.png',
+    },
+    {
+      label: 'bomb',
+      img: 'assets/img/bomb.png',
+    },
+    {
+      label: 'car',
+      img: 'assets/img/car.png',
+    },
+    {
+      label: 'casualty',
+      img: 'assets/img/casualty.png',
+    },
+    {
+      label: 'electricity',
+      img: 'assets/img/electricity.png',
+    },
+    {
+      label: 'fire',
+      img: 'assets/img/fire.png',
+    },
+    {
+      label: 'fire_brigade',
+      img: 'assets/img/fire_brigade.png',
+    },
+    {
+      label: 'flood',
+      img: 'assets/img/flood.png',
+    },
+    {
+      label: 'gas',
+      img: 'assets/img/gas.png',
+    },
+    {
+      label: 'injury',
+      img: 'assets/img/injury.png'
+    },
+    {
+      label: 'paramedics',
+      img: 'assets/img/paramedics.png',
+    },
+    {
+      label: 'person',
+      img: 'assets/img/person.png',
+    },
+    {
+      label: 'police',
+      img: 'assets/img/police.png',
+    },
+    {
+      label: 'roadblock',
+      img: 'assets/img/roadblock.png',
+    }
+  ];
   private sign = {
-    label: 'xd',
+    label: '',
     snaps: []
   };
+  public activeSign = null;
+  private activeSignIndex = -1;
 
   constructor(private paintService: PaintService, private elRef: ElementRef) { }
 
   ngOnInit() {
     this.paintService.initialize(this.elRef.nativeElement);
+    this.initSign();
     this.startPainting();
   }
 
@@ -74,12 +135,32 @@ export class ToolComponent implements OnInit {
         }
       }
     }
+    this.sign.label = this.activeSign.label;
     this.sign.snaps.push(pixelArray);
+  }
+
+  initSign(): void {
+    if (this.activeSignIndex < 0 || this.activeSignIndex >= this.signMap.length - 1) {
+      this.activeSign = this.signMap[0];
+      this.activeSignIndex = 0;
+    } else {
+      this.activeSignIndex++;
+      this.activeSign = this.signMap[this.activeSignIndex];
+    }
   }
 
   saveSign(): void {
     this.toogleSnapsGathering(false);
     console.log(this.sign);
+  }
+
+  refresh(): void {
+    this.toogleSnapsGathering(false);
+    this.sign = {
+      label: '',
+      snaps: []
+    };
+    this.initSign();
   }
 
   isBlack(pixel): boolean {
