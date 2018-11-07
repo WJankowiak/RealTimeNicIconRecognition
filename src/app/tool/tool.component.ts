@@ -2,6 +2,7 @@ import {Component, ElementRef, OnInit} from '@angular/core';
 import {PaintService} from '../paint.service';
 import {fromEvent} from 'rxjs';
 import {mergeMap, takeUntil} from 'rxjs/operators';
+import {RestService} from '../rest.service';
 
 @Component({
   selector: 'app-tool',
@@ -77,8 +78,10 @@ export class ToolComponent implements OnInit {
   };
   public activeSign = null;
   private activeSignIndex = -1;
+  public loading = false;
+  public savingErrorOccur = false;
 
-  constructor(private paintService: PaintService, private elRef: ElementRef) { }
+  constructor(private restService: RestService, private paintService: PaintService, private elRef: ElementRef) { }
 
   ngOnInit() {
     this.paintService.initialize(this.elRef.nativeElement);
@@ -151,8 +154,21 @@ export class ToolComponent implements OnInit {
 
   saveSign(): void {
     this.toogleSnapsGathering(false);
-    console.log(this.sign);
-    this.refresh();
+    if (this.sign.snaps.length > 0) {
+      this.loading = true;
+      this.restService.saveSign(this.sign).subscribe(
+        () => {},
+        () => {
+          this.refresh();
+          this.savingErrorOccur = true;
+          this.loading = false;
+        },
+        () => {
+          this.refresh();
+          this.loading = false;
+        }
+      );
+    }
   }
 
   refresh(): void {
@@ -163,6 +179,7 @@ export class ToolComponent implements OnInit {
     };
     this.initSign();
     this.paintService.clear();
+    this.savingErrorOccur = false;
   }
 
   isBlack(pixel): boolean {

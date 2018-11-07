@@ -6,6 +6,9 @@ import {RouterModule, Routes} from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ToolComponent } from './tool/tool.component';
 
+import { LoadingModule } from 'ngx-loading';
+import {HttpClientModule} from '@angular/common/http';
+
 const appRoutes: Routes = [
   { path: '', component: DashboardComponent},
   { path: 'tool', component: ToolComponent},
@@ -20,9 +23,16 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(
       appRoutes
     ),
+    LoadingModule.forRoot({
+      primaryColour: '#b32216',
+      secondaryColour: '#a11f14',
+      tertiaryColour: '#a11f20',
+      backdropBorderRadius: '8px'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

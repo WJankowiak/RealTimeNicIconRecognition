@@ -5,14 +5,20 @@
       <canvas #mount class="border border-2 border-dark bg-white mb-4"></canvas>
     </div>
     <div class="col-6 text-left">
-      <h4 class="mb-2">{{activeSign.label}}</h4>
-      <img class="img img-fluid" [src]="activeSign.img">
+      <img class="img img-fluid mb-2" [src]="activeSign.img">
+      <h4>{{activeSign.label}}</h4>
     </div>
   </div>
-  <div class="row mb-2">
+  <div class="row mb-4">
     <div class="col-12 text-center">
       <button class="btn btn-outline-dark mx-2" (click)="refresh()">RELOAD</button>
       <button class="btn btn-dark mx-2" (click)="saveSign()">SAVE</button>
     </div>
   </div>
+  <div class="row mb-2" *ngIf="savingErrorOccur">
+    <div class="col-12">
+      <h4 class="text-danger text-center">Upsss... Something went wrong.</h4>
+    </div>
+  </div>
 </div>
+<ngx-loading [show]="loading"></ngx-loading>
