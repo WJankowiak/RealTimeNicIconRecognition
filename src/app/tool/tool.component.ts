@@ -11,7 +11,6 @@ import {RestService} from '../rest.service';
 })
 export class ToolComponent implements OnInit {
 
-  private canvasSize = 128;
   private interval;
   private isIntervalRunning = false;
   private signMap = [
@@ -80,6 +79,7 @@ export class ToolComponent implements OnInit {
   private activeSignIndex = -1;
   public loading = false;
   public savingErrorOccur = false;
+  private currentSnap = [];
 
   constructor(private restService: RestService, private paintService: PaintService, private elRef: ElementRef) { }
 
@@ -101,12 +101,13 @@ export class ToolComponent implements OnInit {
     const offset = this.getOffset(canvas);
 
     down$.subscribe(() => {
-      this.toogleSnapsGathering(true);
+      this.toggleSnapsGathering(true);
     });
 
     paints$.subscribe((event) => {
       const clientX = event.clientX - offset.left;
       const clientY = event.clientY - offset.top;
+      this.addPointToCurrentSnap(Math.floor(clientX), Math.floor(clientY));
       this.paintService.paint({ clientX, clientY });
     });
 
@@ -125,21 +126,11 @@ export class ToolComponent implements OnInit {
   }
 
   makeSnap(): void {
-    const { nativeElement } = this.elRef;
-    const canvas = nativeElement.querySelector('canvas') as HTMLCanvasElement;
-    const pixelArray = [];
-    for (let x = 0; x < this.canvasSize; x++) {
-      pixelArray.push([]);
-      for (let y = 0; y < this.canvasSize; y++) {
-        if (this.isBlack(canvas.getContext('2d').getImageData(x, y, 1, 1).data)) {
-          pixelArray[x].push(1);
-        } else {
-          pixelArray[x].push(0);
-        }
-      }
-    }
     this.sign.label = this.activeSign.label;
-    this.sign.snaps.push(pixelArray);
+    if (this.currentSnap.length > 0) {
+      this.sign.snaps.push(this.currentSnap);
+      this.clearCurrentSnap();
+    }
   }
 
   initSign(): void {
@@ -153,7 +144,7 @@ export class ToolComponent implements OnInit {
   }
 
   saveSign(): void {
-    this.toogleSnapsGathering(false);
+    this.toggleSnapsGathering(false);
     if (this.sign.snaps.length > 0) {
       this.loading = true;
       this.restService.saveSign(this.sign).subscribe(
@@ -171,8 +162,16 @@ export class ToolComponent implements OnInit {
     }
   }
 
+  addPointToCurrentSnap(x: number, y: number): void {
+    this.currentSnap.push({x: x, y: y});
+  }
+
+  clearCurrentSnap(): void {
+    this.currentSnap = [];
+  }
+
   refresh(): void {
-    this.toogleSnapsGathering(false);
+    this.toggleSnapsGathering(false);
     this.sign = {
       label: '',
       snaps: []
@@ -182,11 +181,7 @@ export class ToolComponent implements OnInit {
     this.savingErrorOccur = false;
   }
 
-  isBlack(pixel): boolean {
-    return pixel[3] > 0 && pixel[0] === pixel[1] && pixel[1] === pixel[2] && pixel[2] === 0;
-  }
-
-  toogleSnapsGathering(turnOn: boolean): void {
+  toggleSnapsGathering(turnOn: boolean): void {
     if (turnOn && !this.isIntervalRunning) {
       this.interval = setInterval(() => {
         this.makeSnap();
