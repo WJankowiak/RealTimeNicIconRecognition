@@ -1,3 +1,13 @@
-<div class="container mt-5">
-  <h3>Dashboard</h3>
+<div class="container text-center mt-5">
+  <h3 class="mb-4">Real time sign recognition</h3>
+  <div class="row mb-2">
+    <div class="col-12 text-center">
+      <canvas #mount class="border border-2 border-dark bg-white mb-4"></canvas>
+    </div>
+  </div>
+  <div class="row mb-4">
+    <div class="col-12 text-center">
+      <button class="btn btn-outline-dark mx-2" (click)="refresh()">CLEAR</button>
+    </div>
+  </div>
 </div>
