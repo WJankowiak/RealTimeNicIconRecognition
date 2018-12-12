@@ -95,6 +95,12 @@ export class DashboardComponent implements OnInit {
     const paints$ = down$.pipe(
       mergeMap(down => move$.pipe(takeUntil(up$)))
     );
+    const touchMove$ = fromEvent<TouchEvent>(canvas, 'touchmove');
+    const touchStart$ = fromEvent<TouchEvent>(canvas, 'touchstart');
+    const touchEnd$ = fromEvent<TouchEvent>(canvas, 'touchend');
+    const touchPaint$ = touchStart$.pipe(
+      mergeMap(start => touchMove$.pipe(takeUntil(touchEnd$)))
+    );
     const offset = this.getOffset(canvas);
 
     down$.subscribe(() => {
@@ -109,6 +115,21 @@ export class DashboardComponent implements OnInit {
     });
 
     up$.subscribe(() => {
+      this.paintService.refresh();
+    });
+
+    touchStart$.subscribe(() => {
+      this.toggleSnapsGathering(true);
+    });
+
+    touchPaint$.subscribe((event) => {
+      const clientX = event.touches[0].clientX - offset.left;
+      const clientY = event.touches[0].clientY - offset.top;
+      this.addPointToCurrentSnap(Math.floor(clientX), Math.floor(clientY));
+      this.paintService.paint({ clientX, clientY });
+    });
+
+    touchEnd$.subscribe(() => {
       this.paintService.refresh();
     });
   }
