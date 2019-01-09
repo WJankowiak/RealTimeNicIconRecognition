@@ -75,8 +75,12 @@ export class DashboardComponent implements OnInit {
     label: '',
     snaps: []
   };
-  public loading = false;
-  public savingErrorOccur = false;
+  public predictedSign = {
+    label: null,
+    img: null,
+    probabilityArray: null
+  };
+  public predictErrorOccur = false;
   private currentSnap = [];
 
   constructor(private restService: RestService, private paintService: PaintService, private elRef: ElementRef) { }
@@ -147,6 +151,7 @@ export class DashboardComponent implements OnInit {
     if (this.currentSnap.length > 0) {
       this.sign.snaps.push(this.currentSnap);
       this.clearCurrentSnap();
+      this.predictSign();
     }
   }
 
@@ -165,7 +170,10 @@ export class DashboardComponent implements OnInit {
       snaps: []
     };
     this.paintService.clear();
-    this.savingErrorOccur = false;
+    this.predictErrorOccur = false;
+    this.predictedSign.label = null;
+    this.predictedSign.img = null;
+    this.predictedSign.probabilityArray = null;
   }
 
   toggleSnapsGathering(turnOn: boolean): void {
@@ -178,6 +186,33 @@ export class DashboardComponent implements OnInit {
     if (!turnOn) {
       clearInterval(this.interval);
       this.isIntervalRunning = false;
+    }
+  }
+
+  predictSign(snaps: any = this.sign) {
+    this.restService.predictSign(snaps).subscribe(
+    data => {
+        console.log(data);
+        // @ts-ignore
+        this.bindPredictedSign(data.result);
+      },
+      error => {
+        console.log(error);
+        this.predictErrorOccur = true;
+      }
+    );
+  }
+
+  bindPredictedSign(predictResult: number[]) {
+    const indexOfPredictedSign = predictResult.indexOf(Math.max(...predictResult));
+    this.predictedSign.label = this.signMap[indexOfPredictedSign].label;
+    this.predictedSign.img = this.signMap[indexOfPredictedSign].img;
+    this.predictedSign.probabilityArray = [];
+    for (let i = 0; i < predictResult.length; i++) {
+      this.predictedSign.probabilityArray.push({
+        sign: this.signMap[i].label,
+        probability: predictResult[i].toFixed(4)
+      });
     }
   }
 
