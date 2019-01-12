@@ -9,6 +9,8 @@ import { ToolComponent } from './tool/tool.component';
 import { LoadingModule } from 'ngx-loading';
 import {HttpClientModule} from '@angular/common/http';
 
+import { OrderModule } from 'ngx-order-pipe';
+
 const appRoutes: Routes = [
   { path: '', component: DashboardComponent},
   { path: 'tool', component: ToolComponent},
@@ -32,7 +34,8 @@ const appRoutes: Routes = [
       secondaryColour: '#a11f14',
       tertiaryColour: '#a11f20',
       backdropBorderRadius: '8px'
-    })
+    }),
+    OrderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

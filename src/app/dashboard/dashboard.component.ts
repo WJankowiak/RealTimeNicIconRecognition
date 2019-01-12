@@ -82,6 +82,7 @@ export class DashboardComponent implements OnInit {
   };
   public predictErrorOccur = false;
   private currentSnap = [];
+  public order = 'probabilityValue';
 
   constructor(private restService: RestService, private paintService: PaintService, private elRef: ElementRef) { }
 
@@ -211,7 +212,8 @@ export class DashboardComponent implements OnInit {
     for (let i = 0; i < predictResult.length; i++) {
       this.predictedSign.probabilityArray.push({
         sign: this.signMap[i].label,
-        probability: predictResult[i].toFixed(4)
+        probability: predictResult[i].toFixed(4),
+        probabilityValue: predictResult[i]
       });
     }
   }

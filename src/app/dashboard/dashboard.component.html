@@ -21,11 +21,20 @@
   </div>
   <div class="row mb-4" *ngIf="predictedSign.probabilityArray">
     <div class="col-6 mx-auto text-center">
-      <ul class="list-group">
-        <li class="list-group-item" *ngFor="let item of predictedSign.probabilityArray">
-          <span>{{item.sign}} : {{item.probability}}</span>
-        </li>
-      </ul>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Sign</th>
+            <th>Probability</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of predictedSign.probabilityArray | orderBy: order:true">
+            <td>{{item.sign}}</td>
+            <td>{{item.probability}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
