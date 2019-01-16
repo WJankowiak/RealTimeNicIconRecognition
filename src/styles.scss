@@ -3,6 +3,10 @@ $body-bg: #f8f8f8;
 @import "~bootstrap/scss/bootstrap-grid";
 @import "~bootstrap/scss/bootstrap-reboot";
 
+html {
+  touch-action: pan-down; // Disabling android's chrome pull-down-to-refresh feature
+}
+
 body {
   overflow-y: scroll;
   overscroll-behavior: contain; // Disabling android's chrome pull-down-to-refresh feature
