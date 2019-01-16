@@ -108,6 +108,7 @@ export class ToolComponent implements OnInit {
 
     down$.subscribe(() => {
       this.toggleSnapsGathering(true);
+      this.paintService.disableScroll();
     });
 
     paints$.subscribe((event) => {
@@ -119,10 +120,12 @@ export class ToolComponent implements OnInit {
 
     up$.subscribe(() => {
       this.paintService.refresh();
+      this.paintService.enableScroll();
     });
 
     touchStart$.subscribe(() => {
       this.toggleSnapsGathering(true);
+      this.paintService.disableScroll();
     });
 
     touchPaint$.subscribe((event) => {
@@ -134,6 +137,7 @@ export class ToolComponent implements OnInit {
 
     touchEnd$.subscribe(() => {
       this.paintService.refresh();
+      this.paintService.enableScroll();
     });
   }
 
