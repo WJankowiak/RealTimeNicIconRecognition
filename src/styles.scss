@@ -10,4 +10,31 @@ html {
 body {
   overflow-y: scroll;
   overscroll-behavior: contain; // Disabling android's chrome pull-down-to-refresh feature
+
+  background-image: url('assets/background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; 
+}
+
+main {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+}
+
+.my-shadow {
+  box-shadow: 0 0 30px rgba(0,0,0,.15);
+}
+
+@media (max-width: 1199.98px) {
+  body {
+    background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('assets/background.jpg');
+  }
+}
+
+@media (min-width: 1200px) {
+  .my-shadow {
+    box-shadow: 0 0 60px 30px rgba(0,0,0,.75);
+  }
 }
