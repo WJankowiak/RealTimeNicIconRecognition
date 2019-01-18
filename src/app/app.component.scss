@@ -1,0 +1,28 @@
+nav, footer {
+    min-height: 100px;
+    animation: 60s infinite animate-background;
+}
+nav {
+    background: linear-gradient(to right,#FF9800, #f44336);
+    background-size: 400% 400%;
+}
+footer {
+    background: linear-gradient(to right, #f44336, #FF9800);
+    background-size: 400% 400%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+@keyframes animate-background { 
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+
+.navbar-brand {
+    margin-top: 22px;
+    margin-bottom: 22px;
+}

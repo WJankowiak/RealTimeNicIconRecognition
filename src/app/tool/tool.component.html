@@ -1,24 +1,33 @@
-<div class="container text-center mt-5">
-  <h3 class="mb-4">Data gathering tool</h3>
-  <div class="row mb-2">
-    <div class="col-6 text-right">
-      <canvas #mount class="border border-2 border-dark bg-white mb-4"></canvas>
-    </div>
-    <div class="col-6 text-left">
-      <img class="img img-fluid mb-2" [src]="activeSign.img">
-      <h4>{{activeSign.label}}</h4>
+<main>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-xl-6 offset-xl-6 text-center my-5">
+        <h1 class="display-3 mb-5">Data gathering tool</h1>
+        <div class="row mb-3 justify-content-center">
+          <div class="col-3 text-right">
+            <canvas #mount class="border border-2 border-dark bg-white mb-4"></canvas>
+          </div>
+          <div class="col-3">
+            <div class="text-center">
+              <img class="img img-fluid" [src]="activeSign.img">
+              <h4 class="mb-0 mt-2">{{activeSign.label}}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 text-center">
+            <button class="btn btn-success btn-lg mr-4" (click)="saveSign()">SAVE SIGN</button>
+            <button class="btn btn-danger btn-lg" (click)="refresh()">ABANDON SIGN</button>
+          </div>
+        </div>
+        <div class="row mt-5 text-center" *ngIf="savingErrorOccur">
+          <div class="col-12">
+            <h4 class="text-danger">Upsss... Something went wrong.</h4>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="row mb-4">
-    <div class="col-12 text-center">
-      <button class="btn btn-outline-dark mx-2" (click)="refresh()">RELOAD</button>
-      <button class="btn btn-dark mx-2" (click)="saveSign()">SAVE</button>
-    </div>
-  </div>
-  <div class="row mb-2" *ngIf="savingErrorOccur">
-    <div class="col-12">
-      <h4 class="text-danger text-center">Upsss... Something went wrong.</h4>
-    </div>
-  </div>
-</div>
+</main>
+
 <ngx-loading [show]="loading"></ngx-loading>
