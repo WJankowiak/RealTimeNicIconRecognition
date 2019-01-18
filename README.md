@@ -1,5 +1,8 @@
 # RealTimeSignRecognition
 
+This project is available here:
+http://real-time-icon-recognition.getknowledge.pl/
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
 
 ## Development server
