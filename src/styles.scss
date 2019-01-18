@@ -19,22 +19,51 @@ body {
 
 main {
   min-height: calc(100vh - 200px);
-  display: flex;
-  align-items: center;
 }
 
 .my-shadow {
   box-shadow: 0 0 30px rgba(0,0,0,.15);
 }
 
+.sign-container {
+  height: 130px;
+}
+
 @media (max-width: 1199.98px) {
   body {
     background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('assets/background.jpg');
+  }
+
+  .canvas-container {
+    height: 130px;
+    position: relative;
+    canvas {
+      position: fixed;
+      left: calc(25% - 30px);
+      transform: translate(-25%);
+    }
   }
 }
 
 @media (min-width: 1200px) {
   .my-shadow {
     box-shadow: 0 0 60px 30px rgba(0,0,0,.75);
+  }
+
+  main {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .display-3  {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .display-3  {
+    font-size: 30px;
   }
 }

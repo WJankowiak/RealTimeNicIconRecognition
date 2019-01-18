@@ -18,20 +18,25 @@
         </div>
       </div>
       <div class="col-12 col-xl-6 text-center my-5" [ngClass]="{'offset-xl-6':!predictedSign.probabilityArray}">
-        <h1 class="display-3 mb-5">Real time sign recognition</h1>
+        <h1 class="display-3 mb-5"><span class="d-none d-sm-inline">Real time&nbsp;s</span><span class="d-sm-none">S</span>ign recognition</h1>
         <div class="row mb-3 justify-content-center">
-          <div class="col-3 text-right">
+          <div class="col-6 col-xl-3 text-center canvas-container">
             <canvas #mount class="border border-2 border-dark bg-white mb-4"></canvas>
           </div>
-          <div class="col-3">
-            <div class="text-center" *ngIf="predictedSign.label && predictedSign.img">
-              <img class="img img-fluid" [src]="predictedSign.img">
-              <h4 class="mb-0 mt-2">{{predictedSign.label}}</h4>
+          <div class="col-6 col-xl-3">
+            <div class="text-center sign-container">
+              <div *ngIf="predictedSign.label && predictedSign.img">
+                <img class="img img-fluid" [src]="predictedSign.img">
+                <h4 class="mb-0">{{predictedSign.label}}</h4>
+              </div>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-12 text-center">
+          <div class="col-6 offset-6 d-sm-none">
+            <button class="btn btn-danger" (click)="refresh()">CLEAR CANVAS</button>
+          </div>
+          <div class="col-12 d-none d-sm-block">
             <button class="btn btn-danger btn-lg" (click)="refresh()">CLEAR CANVAS</button>
           </div>
         </div>
