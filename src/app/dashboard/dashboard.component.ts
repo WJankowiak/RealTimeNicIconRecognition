@@ -216,7 +216,7 @@ export class DashboardComponent implements OnInit {
     for (let i = 0; i < predictResult.length; i++) {
       this.predictedSign.probabilityArray.push({
         sign: this.signMap[i].label,
-        probability: predictResult[i].toFixed(2),
+        probability: (predictResult[i] * 100).toFixed(2),
         probabilityValue: predictResult[i]
       });
     }

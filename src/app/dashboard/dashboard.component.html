@@ -9,7 +9,7 @@
                 <div class="col-12 col-md-6 mb-3" *ngFor="let item of predictedSign.probabilityArray | orderBy: order:true; first as bestPredict">
                   <h4 [ngClass]="{'text-success': bestPredict}">{{item.sign}}</h4>
                   <div class="progress">
-                    <div class="progress-bar" role="progressbar" [ngStyle]="{'width': item.probability*100 + '%'}" attr.aria-valuenow="{{item.probability*100}}" aria-valuemin="0" aria-valuemax="100">{{item.probability*100}}%</div>
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{'width': item.probability + '%'}" attr.aria-valuenow="{{item.probability}}" aria-valuemin="0" aria-valuemax="100">{{item.probability}}%</div>
                   </div>
                 </div>
               </div>
