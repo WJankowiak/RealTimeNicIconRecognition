@@ -10,10 +10,12 @@ import { LoadingModule } from 'ngx-loading';
 import {HttpClientModule} from '@angular/common/http';
 
 import { OrderModule } from 'ngx-order-pipe';
+import { SignsComponent } from './signs/signs.component';
 
 const appRoutes: Routes = [
-  { path: '', component: DashboardComponent},
-  { path: 'tool', component: ToolComponent},
+  { path: '', component: DashboardComponent },
+  { path: 'tool', component: ToolComponent },
+  { path: 'signs', component: SignsComponent },
   { path: '**', redirectTo: '' }
 ];
 
@@ -21,7 +23,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     DashboardComponent,
-    ToolComponent
+    ToolComponent,
+    SignsComponent
   ],
   imports: [
     BrowserModule,

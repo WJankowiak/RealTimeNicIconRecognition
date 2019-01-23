@@ -106,7 +106,6 @@ export class DashboardComponent implements OnInit {
     const touchPaint$ = touchStart$.pipe(
       mergeMap(start => touchMove$.pipe(takeUntil(touchEnd$)))
     );
-    const offset = this.getOffset(canvas);
 
     down$.subscribe(() => {
       this.toggleSnapsGathering(true);
@@ -114,6 +113,7 @@ export class DashboardComponent implements OnInit {
     });
 
     paints$.subscribe((event) => {
+      const offset = this.getOffset(canvas);
       const clientX = event.clientX - offset.left;
       const clientY = event.clientY - offset.top;
       this.addPointToCurrentSnap(Math.floor(clientX), Math.floor(clientY));
@@ -131,6 +131,7 @@ export class DashboardComponent implements OnInit {
     });
 
     touchPaint$.subscribe((event) => {
+      const offset = this.getOffset(canvas);
       const clientX = event.touches[0].clientX - offset.left;
       const clientY = event.touches[0].clientY - offset.top;
       this.addPointToCurrentSnap(Math.floor(clientX), Math.floor(clientY));

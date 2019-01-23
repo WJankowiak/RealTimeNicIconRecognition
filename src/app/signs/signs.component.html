@@ -1,0 +1,10 @@
+<main>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-3" *ngFor="let sign of signs">
+        <img class="img img-fluid" [src]="sign.img">
+        <span>{{sign.label}}</span>
+      </div>
+    </div>
+  </div>
+</main>
