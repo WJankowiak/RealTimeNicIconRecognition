@@ -1,9 +1,25 @@
 # RealTimeSignRecognition
 
-This project is available here:
+Stable live version of this project is available here:
 http://real-time-icon-recognition.getknowledge.pl/
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
+This project was implemented as part of the project "Stream Data Processing" at Wrocław University of Science and Technology.
+It was created to recognize NicIcons on real time.
+
+## Technologies
+* Angular 6
+* TypeScript 2.7
+* HTML 5
+* CSS 3
+* Bootstrap 4
+
+## Local usage
+
+To use our app locally you should clone this repository and then:
+1. install nodeJS from here: https://nodejs.org
+2. install Angular CLI by npm by command: `npm install -g @angular/cli`
+3. install project dependencies by command: `npm install`
+4. serve application by command: `ng serve` (more information below)
 
 ## Development server
 
@@ -16,14 +32,6 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 ## Further help
 
