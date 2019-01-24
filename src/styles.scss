@@ -21,6 +21,10 @@ body {
   }
 }
 
+.nav-item {
+  cursor: pointer;
+}
+
 main {
   min-height: calc(100vh - 200px);
 }
@@ -41,11 +45,6 @@ main {
   .canvas-container {
     height: 130px;
     position: relative;
-    // canvas {
-    //   position: fixed;
-    //   left: calc(25% - 30px);
-    //   transform: translate(-25%);
-    // }
   }
 }
 
