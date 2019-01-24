@@ -66,9 +66,14 @@ export class SignsComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor() {
+    document.body.className = "signs";
+  }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ngOnDestroy() {
+    document.body.className = "";
   }
 
 }

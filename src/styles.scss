@@ -15,6 +15,10 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center; 
+  
+  &.signs {
+      background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('assets/background.jpg');
+  }
 }
 
 main {
@@ -37,11 +41,11 @@ main {
   .canvas-container {
     height: 130px;
     position: relative;
-    canvas {
-      position: fixed;
-      left: calc(25% - 30px);
-      transform: translate(-25%);
-    }
+    // canvas {
+    //   position: fixed;
+    //   left: calc(25% - 30px);
+    //   transform: translate(-25%);
+    // }
   }
 }
 
